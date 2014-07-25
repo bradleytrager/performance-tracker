@@ -11,6 +11,7 @@
     "angular-loader": "1.2.x",
     "angular-mocks": "~1.2.x",
     "html5-boilerplate": "~4.3.0",
-    "n3-line-chart": "~1.1.2"
+    "n3-line-chart": "~1.1.2",
+    "mobile-angular-ui": "~1.1.0-beta.27"
   }
 }

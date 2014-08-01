@@ -28,3 +28,10 @@
   content: "";
   padding: 0;
 }
+
+/*custom styles*/
+
+.app{
+  background: white;
+  color: #48C9AF;
+}

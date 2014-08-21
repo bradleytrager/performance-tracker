@@ -13,5 +13,8 @@
     "html5-boilerplate": "~4.3.0",
     "n3-line-chart": "~1.1.2",
     "mobile-angular-ui": "~1.1.0-beta.27"
+  },
+  "devDependencies": {
+    "jquery": "~2.1.1"
   }
 }

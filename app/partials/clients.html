@@ -1,0 +1,13 @@
+<div class="left-pane">
+	<input type="text" ng-model="clientSearch" placeholder="search clients..." />
+		<div ng-repeat="client in clients | filter:clientSearch">
+			<span class="clientName" ng-bind="client.name" ng-click="displayClient(client.pkClientID)"></span>
+		</div>
+</div>
+<div class="right-pane">
+	<div class="client-details">
+		<span ng-bind="client.name"></span>
+		<span ng-bind="client.email"></span>
+		<span ng-bind="client.studio"></span>
+	</div>
+</div>

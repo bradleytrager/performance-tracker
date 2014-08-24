@@ -1,8 +1,11 @@
 'use strict';
 
-/* Controllers */
+define(['angular'], function(angular) {
 
-angular.module('myApp.controllers', [])
+	/* Controllers */
+
+	return angular.module('myApp.controllers', [])
+
 	.controller('MyCtrl1', ['$scope',
 		function($scope) {
 			var linearData = function(rowCount, seriesCount) {
@@ -20,8 +23,8 @@ angular.module('myApp.controllers', [])
 
 				return data;
 			};
-			console.log(linearData(30,4));
-			$scope.data = linearData(30,4);
+			console.log(linearData(30, 4));
+			$scope.data = linearData(30, 4);
 			$scope.options = {
 				series: [{
 					y: "val_0",
@@ -69,26 +72,27 @@ angular.module('myApp.controllers', [])
 
 		}
 	])
-	.controller('clients', ['$scope','$http',
-		function($scope, $http) {
-			$http.get('/clients').then(function(clients) {
-				$scope.clients = clients.data.data;
-				$scope.clients.forEach(function(client) {
-					client.id = client['pkClientID'];
-					client.name = client['Client Name'];
-					client.email = client['Email'];
-					client.studio = client['fk Studio ID'];
-				})
-			});
+		.controller('clients', ['$scope', '$http',
+			function($scope, $http) {
+				$http.get('/clients').then(function(clients) {
+					$scope.clients = clients.data.data;
+					$scope.clients.forEach(function(client) {
+						client.id = client['pkClientID'];
+						client.name = client['Client Name'];
+						client.email = client['Email'];
+						client.studio = client['fk Studio ID'];
+					})
+				});
 
-			$scope.client = {};
+				$scope.client = {};
 
-			$scope.displayClient = function(clientId) {
-				$scope.client = findClient(clientId);
+				$scope.displayClient = function(clientId) {
+					$scope.client = findClient(clientId);
+				}
+
+				function findClient(clientId) {
+					return $scope.clients[0];
+				}
 			}
-
-			function findClient(clientId) {
-				return $scope.clients[0];
-			}
-		}
-	]);
+		]);
+});

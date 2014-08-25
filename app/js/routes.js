@@ -13,8 +13,8 @@ define(['angular', 'app'], function(angular, app) {
       controller: 'MyCtrl2'
     });
     $routeProvider.when('/clients', {
-      templateUrl: 'partials/clients.html',
-      controller: 'clients'
+      templateUrl: 'js/clients/partials/clients.html',
+      controller: 'clientsController'
     });
     $routeProvider.otherwise({
       redirectTo: '/view1'

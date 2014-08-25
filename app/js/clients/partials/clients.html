@@ -1,0 +1,40 @@
+<style type="text/css">
+	.left-pane, .right-pane {
+		width: 50%;
+		float: left;
+	}
+	.clientName, .client-details div, input {
+		display:block;
+		height: 30px;
+		font-size: 14pt;
+	}
+	.clientName:hover, .clientName.active{
+		background: gray;
+	}
+	.client-details div span:first-child {
+		font-weight: bold;
+	}
+</style>
+<div class="left-pane">
+	<input type="text" ng-model="clientSearch" placeholder="search clients..." />
+	<div ng-repeat="client in clients | filter:clientSearch">
+		<div class="clientName" 
+				ng-class="{active:selectedClient.id == client.id}"
+				ng-bind="client.name" 
+				ng-click="displayClient(client.id)">
+		</div>
+	</div>
+</div>
+<div class="right-pane">
+	<div class="client-details" ng-show="selectedClient">
+		<div>
+			<span>Name:</span> <span ng-bind="selectedClient.name"></span>
+		</div>
+		<div>
+			<span>Email:</span> <span ng-bind="selectedClient.email"></span>
+		</div>
+		<div>
+			<span>Studio:</span> <span ng-bind="selectedClient.studio"></span>
+		</div>
+	</div>
+</div>

@@ -32,12 +32,20 @@ require.config({
 require([
 	'angular',
 	'app',
-	'angularMocks',
 	'routes',
-	'mockBackend'
-], function(angular, app, routes) {
+	'mockBackend/mockBackend',
+	'angularMocks'
+], function(angular, app, routes, mockBackend) {
 
+	var isDevMode = true;
+	
 	$(function() {
-		angular.bootstrap($('#myApp'), ['myApp', 'myAppDev']);
+		if(isDevMode){
+			angular.bootstrap($('#myApp'), ['myApp', mockBackend]);
+		}
+		else {
+			angular.bootstrap($('#myApp'), ['myApp']);
+		}
 	});
+	
 });

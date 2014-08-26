@@ -18,6 +18,8 @@ define([
       'myApp.controllers',
       'n3-line-chart'
     ])
-    .config(routes);
-
+    .config(routes)
+    .run(function($http) {
+      $http.defaults.headers.common.Authorization = 'Basic YnJhZGxleXRyYWdlckBnbWFpbC5jb206cGFzc3dvcmQ='
+    });
 });

@@ -8,7 +8,7 @@ define([
 	var mockBackendRunner = function($httpBackend) {
 
 		// returns the fixture data
-		$httpBackend.whenGET('/clients').respond(clients);
+		$httpBackend.whenGET('http://pt.trackformance.com/RESTfm/PT_Demo/script/listClientsForLoggedInUser/json-user/.json').respond(clients);
 		$httpBackend.whenGET(/partials\//).passThrough();
 	};
 

@@ -24,6 +24,10 @@ define([
 					$scope.selectedClient = client;
 				}
 			});
+		};
+
+		$scope.clearSelectedClient = function() {
+			$scope.selectedClient = null;
 		}
 	};
 

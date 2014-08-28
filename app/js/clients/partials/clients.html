@@ -1,41 +1,32 @@
-<style type="text/css">
-	.left-pane, .right-pane {
-		width: 50%;
-		float: left;
-	}
-	.clientName, .client-details div, input {
-		display:block;
-		height: 30px;
-		font-size: 14pt;
-	}
-	.clientName:hover, .clientName.active{
-		background: gray;
-	}
-	.client-details div span:first-child {
-		font-weight: bold;
-	}
-</style>
-<div class="left-pane">
-	<input type="text" ng-model="clientSearch" placeholder="search clients..." />
-	<div ng-repeat="client in clients | filter:clientSearch"
-			ng-show="clientSearch.length > 2">
-		<div class="clientName" 
+<div class="row">
+	<div class="left-pane col-sm-6">
+		<div id="clientSearch">
+			<input type="text" ng-model="clientSearch" placeholder="search clients..." />
+		</div>
+		<div ng-repeat="client in clients | filter:clientSearch"
+			ng-show="clientSearch.length > 0">
+			<div class="clientName"
 				ng-class="{active:selectedClient.id == client.id}"
-				ng-bind="client.name" 
-				ng-click="displayClient(client.id)">
+				ng-bind="client.name"
+				ng-click="displayClient(client.id)" >
+			</div>
 		</div>
 	</div>
-</div>
-<div class="right-pane">
-	<div class="client-details" ng-show="selectedClient">
-		<div>
-			<span>Name:</span> <span ng-bind="selectedClient.name"></span>
+	<div class="right-pane col-sm-6">
+	<div ng-show="selectedClient">
+		<div class="closeClientDetails"
+		ng-show="selectedClient"
+		ng-click="clearSelectedClient()">
+		close
 		</div>
-		<div>
-			<span>Email:</span> <span ng-bind="selectedClient.email"></span>
-		</div>
-		<div>
-			<span>Studio:</span> <span ng-bind="selectedClient.studio"></span>
-		</div>
+			<div class="client-details" >
+				<p class="name" ng-bind="selectedClient.name"></p>
+				<p ng-bind="selectedClient.email"></p>
+				<p ng-bind="selectedClient.studio"></p>
+			</div>
+			<div class="list-group">
+		          <a class="list-group-item viewReport" href="#/report">View Report <i class="fa fa-chevron-right pull-right"></i></a>
+		        </div>
+	</div>
 	</div>
 </div>

@@ -16,6 +16,10 @@ define(['angular', 'app'], function(angular, app) {
       templateUrl: 'js/clients/partials/clients.html',
       controller: 'clientsController'
     });
+    $routeProvider.when('/exercises', {
+      templateUrl: 'js/exercises/partials/exercises.html',
+      controller: 'exercisesController'
+    });
     $routeProvider.otherwise({
       redirectTo: '/view1'
     });

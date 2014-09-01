@@ -5,14 +5,16 @@ define([
   'controllers',
   'routes',
   'clients/clients',
+  'exercises/exercises',
   'angularRoute',
   'angularUI',
   'linechart'
-], function(angular, controllers, routes, clientsModule) {
+], function(angular, controllers, routes, clientsModule, exercisesModule) {
 
   // Declare app level module which depends on filters, and services
   return angular.module('myApp', [
       clientsModule,
+      exercisesModule,
       'ngRoute',
       'mobile-angular-ui',
       'myApp.controllers',

@@ -3,7 +3,7 @@
 		<div id="clientSearch">
 			<input type="text" ng-model="clientSearch" placeholder="search clients..." />
 		</div>
-		<div ng-repeat="client in clients | filter:clientSearch"
+		<div ng-repeat="client in clients | filter:{name: clientSearch}"
 			ng-show="clientSearch.length > 2">
 			<div class="clientName"
 				ng-class="{active:selectedClient.id == client.id}"

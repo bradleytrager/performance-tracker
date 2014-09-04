@@ -5,8 +5,9 @@ define([
 ], function(angular, controller) {
 
 	// Declare app level module which depends on filters, and services
-	var exercisesController = function($scope, $http) {
-		$http.get('http://pt.trackformance.com/RESTfm/PT_Demo/script/listExercisesForClient/json-exerciseList/.json').then(function(exercises) {
+	var exercisesController = function($scope, $http, $routeParams) {
+		var BASE_URL = 'http://pt.trackformance.com/RESTfm/PT_Demo/script/';
+		$http.get(BASE_URL + 'listExercisesForClient/json-exerciseList/.json?RFMscriptParam=' + $routeParams.clientId).then(function(exercises) {
 			$scope.exercises = exercises.data.data;
 			console.log(exercises);
 			$scope.exercises.forEach(function(exercise) {
@@ -16,6 +17,6 @@ define([
 		});
 	};
 
-	return ['$scope', '$http', exercisesController];
+	return ['$scope', '$http', '$routeParams', exercisesController];
 
 });

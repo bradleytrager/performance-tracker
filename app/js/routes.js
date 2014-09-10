@@ -17,7 +17,7 @@ define(['angular', 'app'], function(angular, app) {
       controller: 'clientsController'
     });
     $routeProvider.when('/exercises/:clientId', {
-      templateUrl: 'js/exercises/partials/exercises.html',
+      templateUrl: 'js/clients/partials/exercises.html',
       controller: 'exercisesController'
     });
     $routeProvider.otherwise({

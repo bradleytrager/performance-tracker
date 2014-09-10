@@ -3,12 +3,16 @@
 define([
   'angular',
   'clients/clientsController',
-], function(angular, clientsController) {
+  'clients/exercisesController',
+  'clients/clientsService'
+], function(angular, clientsController, exercisesController, clientsService) {
 
   var moduleName = 'clients';
 
   angular.module(moduleName, [])
-    .controller("clientsController", clientsController);
+    .controller("clientsController", clientsController)
+    .controller("exercisesController", exercisesController)
+    .service('clientsService', clientsService);
 
   return moduleName;
 

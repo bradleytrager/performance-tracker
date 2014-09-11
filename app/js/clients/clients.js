@@ -4,15 +4,18 @@ define([
   'angular',
   'clients/clientsController',
   'clients/exercisesController',
-  'clients/clientsService'
-], function(angular, clientsController, exercisesController, clientsService) {
+  'clients/clientsService',
+  'clients/routes',
+  'angularRoute',
+], function(angular, clientsController, exercisesController, clientsService, routes) {
 
   var moduleName = 'clients';
 
-  angular.module(moduleName, [])
+  angular.module(moduleName, ['ngRoute'])
     .controller("clientsController", clientsController)
     .controller("exercisesController", exercisesController)
-    .service('clientsService', clientsService);
+    .service('clientsService', clientsService)
+    .config(routes);
 
   return moduleName;
 

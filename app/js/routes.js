@@ -1,6 +1,6 @@
 'use strict';
 
-define(['angular', 'app'], function(angular, app) {
+define([], function() {
 
   var routes = function($routeProvider) {
 
@@ -8,18 +8,12 @@ define(['angular', 'app'], function(angular, app) {
       templateUrl: 'partials/partial1.html',
       controller: 'MyCtrl1'
     });
+   
     $routeProvider.when('/view2', {
       templateUrl: 'partials/partial2.html',
       controller: 'MyCtrl2'
     });
-    $routeProvider.when('/clients', {
-      templateUrl: 'js/clients/partials/clients.html',
-      controller: 'clientsController'
-    });
-    $routeProvider.when('/exercises/:clientId', {
-      templateUrl: 'js/clients/partials/exercises.html',
-      controller: 'exercisesController'
-    });
+
     $routeProvider.otherwise({
       redirectTo: '/view1'
     });

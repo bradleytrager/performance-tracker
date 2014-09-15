@@ -21,7 +21,23 @@ define([
       'n3-line-chart'
     ])
     .config(routes)
+    .config(function($provide, $httpProvider, $compileProvider) {
+      $httpProvider.responseInterceptors.push(function($timeout, $q, $location) {
+        return function(promise) {
+          return promise.then(
+            function(successResponse) {
+              return successResponse;
+            },
+            function(errorResponse) {
+              if (errorResponse.status == 403) {
+                $location.path("/");
+              }
+              return $q.reject(errorResponse);
+            });
+        };
+      });
+    })
     .run(function($http) {
-      $http.defaults.headers.common.Authorization = 'Basic ' + btoa('bradleytrager@gmail.com:' + 'password');
+      $http.defaults.headers.common.Authorization = 'Basic ' + btoa('bradlteytrager@gmail.com:' + 'password');
     });
 });

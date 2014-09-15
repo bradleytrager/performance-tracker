@@ -22,6 +22,6 @@ define([
     ])
     .config(routes)
     .run(function($http) {
-      $http.defaults.headers.common.Authorization = 'Basic YnJhZGxleXRyYWdlckBnbWFpbC5jb206cGFzc3dvcmQ='
+      $http.defaults.headers.common.Authorization = 'Basic ' + btoa('bradleytrager@gmail.com:' + 'password');
     });
 });

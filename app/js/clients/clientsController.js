@@ -1,17 +1,15 @@
 'use strict';
 
-define([
-], function() {
+define([], function() {
 
-	var clientsController = function($scope, clientsService) {
-		clientsService.get().then(function(clients) {
-			$scope.clients = clients.data.data;
-			$scope.clients.forEach(function(client) {
-				client.id = client['pkClientID'];
-				client.name = client['Client Name'];
-				client.email = client['Email'];
-				client.studio = client['fk Studio ID'];
-			})
+	var clientsController = function($scope, clientsService, clientList) {
+		$scope.clients = clientList.data.data;
+
+		$scope.clients.forEach(function(client) {
+			client.id = client['pkClientID'];
+			client.name = client['Client Name'];
+			client.email = client['Email'];
+			client.studio = client['fk Studio ID'];
 		});
 
 		$scope.client = {};
@@ -29,6 +27,6 @@ define([
 		}
 	};
 
-	return ['$scope', 'clientsService', clientsController];
+	return ['$scope', 'clientsService', 'clientList', clientsController];
 
 });

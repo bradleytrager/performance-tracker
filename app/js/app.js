@@ -9,6 +9,7 @@ define([
   'angularRoute',
   'angularUI',
   'angularBootstrap',
+  'angularBootstrapTpls',
   'linechart'
 ], function(angular, controllers, loginController, routes, clientsModule) {
 
@@ -24,7 +25,7 @@ define([
     .controller('loginController', loginController)
     .config(routes)
     .config(function($provide, $httpProvider, $compileProvider) {
-      $httpProvider.responseInterceptors.push(function($timeout, $q, $location) {
+      $httpProvider.responseInterceptors.push(function($timeout, $q, $location, $rootScope) {
         return function(promise) {
           return promise.then(
             function(successResponse) {
@@ -32,11 +33,16 @@ define([
             },
             function(errorResponse) {
               if (errorResponse.status == 403) {
-                $location.path("/");
+                $location.path("/login");
+                $rootScope.$broadcast('loginError');
               }
               return $q.reject(errorResponse);
             });
         };
       });
     });
+    //todo remove this
+    // .run(function($http) {
+    //   $http.defaults.headers.common.Authorization = 'Basic ' + btoa('bradleytrager@gmail.com:' + 'password');
+    // });
 });

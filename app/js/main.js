@@ -8,6 +8,7 @@ require.config({
 		text: '../bower_components/requirejs-text/text',
 		angularUI: '../bower_components/mobile-angular-ui/dist/js/mobile-angular-ui.min',
 		angularBootstrap: '../bower_components/angular-bootstrap/ui-bootstrap',
+		angularBootstrapTpls: '../bower_components/angular-bootstrap/ui-bootstrap-tpls',
 		linechart: '../bower_components/n3-line-chart/dist/line-chart'
 	},
 	shim: {
@@ -21,6 +22,7 @@ require.config({
 		},
 		'angularUI': ['angular'],
 		'angularBootstrap': ['angular'],
+		'angularBootstrapTpls': ['angularBootstrap'],
 		'linechart': ['angular']
 	},
 	priority: [

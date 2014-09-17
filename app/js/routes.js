@@ -9,13 +9,13 @@ define([], function() {
       controller: 'MyCtrl1'
     });
    
-    $routeProvider.when('/view2', {
-      templateUrl: 'partials/partial2.html',
-      controller: 'MyCtrl2'
+    $routeProvider.when('/login', {
+      templateUrl: 'partials/login.html',
+      controller: 'loginController'
     });
 
     $routeProvider.otherwise({
-      redirectTo: '/view1'
+      redirectTo: '/login'
     });
 
   };

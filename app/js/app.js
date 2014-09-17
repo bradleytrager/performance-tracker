@@ -3,13 +3,14 @@
 define([
   'angular',
   'controllers',
+  'loginController',
   'routes',
   'clients/clients',
   'angularRoute',
   'angularUI',
   'angularBootstrap',
   'linechart'
-], function(angular, controllers, routes, clientsModule) {
+], function(angular, controllers, loginController, routes, clientsModule) {
 
   // Declare app level module which depends on filters, and services
   return angular.module('myApp', [
@@ -20,6 +21,7 @@ define([
       'myApp.controllers',
       'n3-line-chart'
     ])
+    .controller('loginController', loginController)
     .config(routes)
     .config(function($provide, $httpProvider, $compileProvider) {
       $httpProvider.responseInterceptors.push(function($timeout, $q, $location) {
@@ -36,8 +38,5 @@ define([
             });
         };
       });
-    })
-    .run(function($http) {
-      $http.defaults.headers.common.Authorization = 'Basic ' + btoa('bradlteytrager@gmail.com:' + 'password');
     });
 });

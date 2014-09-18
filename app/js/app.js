@@ -13,7 +13,6 @@ define([
   'linechart'
 ], function(angular, controllers, loginController, routes, clientsModule) {
 
-  // Declare app level module which depends on filters, and services
   return angular.module('myApp', [
       clientsModule,
       'ngRoute',
@@ -24,25 +23,39 @@ define([
     ])
     .controller('loginController', loginController)
     .config(routes)
-    .config(function($provide, $httpProvider, $compileProvider) {
-      $httpProvider.responseInterceptors.push(function($timeout, $q, $location, $rootScope) {
-        return function(promise) {
-          return promise.then(
-            function(successResponse) {
-              return successResponse;
-            },
-            function(errorResponse) {
-              if (errorResponse.status == 403) {
-                $location.path("/login");
-                $rootScope.$broadcast('loginError');
+    .config(['$httpProvider',
+      function($httpProvider) {
+        $httpProvider.interceptors.push(['$q', '$location', '$rootScope', '$timeout',
+          function($q, $location, $rootScope, $timeout) {
+            return {
+              'request': function(config) {
+                return config;
+              },
+
+              'requestError': function(rejection) {
+                if (canRecover(rejection)) {
+                  return responseOrNewPromise
+                }
+                return $q.reject(rejection);
+              },
+
+              'response': function(response) {
+                $rootScope.isLoggedIn = true;
+                return response;
+              },
+
+              'responseError': function(rejection) {
+                if (rejection.status == 403) {
+                  $location.path("/login");
+                  $timeout(function() {
+                    $rootScope.$broadcast('loginError');
+                  });
+                }
+                return $q.reject(rejection);
               }
-              return $q.reject(errorResponse);
-            });
-        };
-      });
-    });
-    //todo remove this
-    // .run(function($http) {
-    //   $http.defaults.headers.common.Authorization = 'Basic ' + btoa('bradleytrager@gmail.com:' + 'password');
-    // });
+            };
+          }
+        ]);
+      }
+    ]);
 });

@@ -4,9 +4,15 @@ define([], function() {
 
 	var loginController = function($scope, $http, $location, $timeout) {
 		$scope.$on('loginError', function() {
-			alert("The email or password you entered is incorrect.");
-			// TODO: make this work
-			// showErrorMessage("The email or password you entered is incorrect.")
+			$timeout(function() {
+				$scope.$apply(function() {
+					showErrorMessage({
+						msg: 'The email or password you entered is incorrect.',
+						type: 'danger'
+					});
+				});
+			});
+
 		});
 
 		$scope.login = function(username, password) {
@@ -18,7 +24,7 @@ define([], function() {
 			$scope.errorMessage = message;
 
 			$timeout(function() {
-				$scope.errorMessage = null;
+				$scope.errorMessage = {};
 			}, 5000);
 		}
 

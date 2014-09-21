@@ -1,19 +1,15 @@
 'use strict';
 
-define([
-	'angular'
-], function(angular, controller) {
+define([], function() {
 
-	// Declare app level module which depends on filters, and services
-	var clientsController = function($scope, $http) {
-		$http.get('http://pt.trackformance.com/RESTfm/PT_Demo/script/listClientsForLoggedInUser/json-user/.json').then(function(clients) {
-			$scope.clients = clients.data.data;
-			$scope.clients.forEach(function(client) {
-				client.id = client['pkClientID'];
-				client.name = client['Client Name'];
-				client.email = client['Email'];
-				client.studio = client['fk Studio ID'];
-			})
+	var clientsController = function($scope, clientsService, clientList) {
+		$scope.clients = clientList.data.data;
+
+		$scope.clients.forEach(function(client) {
+			client.id = client['pkClientID'];
+			client.name = client['Client Name'];
+			client.email = client['Email'];
+			client.studio = client['fk Studio ID'];
 		});
 
 		$scope.client = {};
@@ -31,6 +27,6 @@ define([
 		}
 	};
 
-	return ['$scope', '$http', clientsController];
+	return ['$scope', 'clientsService', 'clientList', clientsController];
 
 });

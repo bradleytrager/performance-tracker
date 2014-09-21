@@ -3,7 +3,7 @@
 		<div id="clientSearch">
 			<input type="text" ng-model="clientSearch" placeholder="search clients..." />
 		</div>
-		<div ng-repeat="client in clients | filter:clientSearch"
+		<div ng-repeat="client in clients | filter:{name: clientSearch}"
 			ng-show="clientSearch.length > 2">
 			<div class="clientName"
 				ng-class="{active:selectedClient.id == client.id}"
@@ -13,20 +13,20 @@
 		</div>
 	</div>
 	<div class="right-pane col-sm-6">
-	<div ng-show="selectedClient">
-		<div class="closeClientDetails"
-		ng-show="selectedClient"
-		ng-click="clearSelectedClient()">
-		close
-		</div>
+		<div ng-show="selectedClient">
+			<div class="closeClientDetails"
+				ng-show="selectedClient"
+				ng-click="clearSelectedClient()">
+				close
+			</div>
 			<div class="client-details" >
 				<p class="name" ng-bind="selectedClient.name"></p>
 				<p ng-bind="selectedClient.email"></p>
 				<p ng-bind="selectedClient.studio"></p>
 			</div>
 			<div class="list-group">
-		          <a class="list-group-item viewReport" href="#/report">View Report <i class="fa fa-chevron-right pull-right"></i></a>
-		        </div>
-	</div>
+				<a class="list-group-item viewReport" ng-href="#/exercises/{{selectedClient.id}}">View Report <i class="fa fa-chevron-right pull-right"></i></a>
+			</div>
+		</div>
 	</div>
 </div>

@@ -44,22 +44,22 @@ define([], function() {
 		$scope.getReport = function(exerciseId) {
 			clientsService.getReport(exerciseId).then(function(report) {
 				var _report = report.data.data;
-
-				_report.forEach(function(data) {
+				var dates = [];
+				_report.forEach(function(data, index) {
 					data["Date"] = new Date(data["Date"]).getTime();
+					data["dateIndex"] = index;
+					dates.push(data["dateIndex"]);
 					var timeParts = data["Total Time"].split(":");
 					var time = 60 * parseInt(timeParts[1]) + parseInt(timeParts[2]);
 					data["Total Time"] = time;
 					data["Current Weight"] = parseInt(data["Current Weight"]);
 				});
 
+
+
 				$scope.data = _report;
 				console.log($scope.data);
-
-			});
-		};
-
-		$scope.options = {
+				$scope.options = {
 			series: [{
 				y: "Current Weight",
 				label: "Current Weight",
@@ -80,8 +80,12 @@ define([], function() {
 			axes: {
 				x: {
 					type: "linear",
-					key: "Date",
-					labelFunction: function(msTime) {
+					key: "dateIndex",
+					labelFunction: function(index) {
+						if (dates.indexOf(index) == -1) {
+							return "";
+						}
+						var msTime = $scope.data[index].Date
 						var date = new Date(msTime);
 
 						var dateParts = date.toString().split(" ");
@@ -114,6 +118,11 @@ define([], function() {
 			drawDots: true,
 			columnsHGap: 5
 		};
+
+			});
+		};
+
+
 	};
 
 	return ['$scope', '$routeParams', 'clientsService', exercisesController];

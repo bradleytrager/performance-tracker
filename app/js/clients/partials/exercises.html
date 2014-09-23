@@ -10,14 +10,14 @@
 				</ul>
 		</div>
 		</h2>
-		
+
 		<div id="exercises" ng-repeat="exercise in exercises" >
 				<div class="exerciseName" ng-bind="exercise.name" ng-click="getReport(exercise.id)"></div>
 		</div>
 		<div class="exercisesError" ng-if="exercisesError">
 				<h3>(<span ng-bind="exercisesError"></span>)</h3>
 		</div>
-		<div>
+		<div style="height:300px; padding: 0 30px;">
 		<linechart data='data' options='options'></linechart>
 	</div>
 </div>

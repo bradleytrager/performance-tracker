@@ -42,6 +42,7 @@ define([], function() {
 		};
 
 		$scope.getReport = function(exerciseId) {
+			$scope.selectedExercise = exerciseId;
 			clientsService.getReport(exerciseId).then(function(response) {
 				var report = response.data.data;
 				console.log(report);
@@ -65,13 +66,25 @@ define([], function() {
 					data["Total Time"] = time;
 					data["Current Weight"] = parseInt(data["Current Weight"]);
 
-					timestamps.push(data["Timestamp"]);
+					var timestamp = new Date(data["Timestamp"]);
+					var hours = timestamp.getHours();
+					if (hours == 0){
+						timestamp = "12 AM";
+					} else if (hours > 12) {
+						timestamp = (hours - 12) + " PM";
+					} else {
+						timestamps = hours + " AM"
+					}
+					timestamps.push(timestamp);
 					goToFailures.push("N/A");
 					outOfSequences.push("N/A");
 					performances.push(data["performanceView"]);
 					currentWeights.push(data["Current Weight"]);
-					netChangeWeights.push(data["netChangeWeight"]);
-					timeUnderLoads.push(data["Total Time"]);
+					netChangeWeights.push(data["netChangeWeight"]? data["netChangeWeight"] + "%" : "");
+					
+					var timeUnderLoadMinutes = Math.floor(data["Total Time"]/60);
+					var timeUnderLoadSeconds = data["Total Time"] % 60;
+					timeUnderLoads.push(timeUnderLoadMinutes + "m " + timeUnderLoadSeconds + "s");
 					rangeOfMotions.push(data["Current Range"]);
 
 				});

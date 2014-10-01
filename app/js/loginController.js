@@ -16,9 +16,15 @@ define([], function() {
 		});
 
 		$scope.login = function(username, password) {
+			setSession(username, password);
 			$http.defaults.headers.common.Authorization = 'Basic ' + btoa(username + ':' + password);
 			$location.path('/clients');
 		};
+
+		function setSession(username, password) {
+			sessionStorage.setItem("username", username);
+			sessionStorage.setItem("password", password);
+		}
 
 		function showErrorMessage(message) {
 			$scope.errorMessage = message;

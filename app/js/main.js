@@ -41,20 +41,14 @@ require([
 	'angularMocks'
 ], function(angular, app, routes, mockBackend) {
 
-	var isDevMode = true;
-	var disablePassword = true;
+	var isDevMode = false;
 
 	$(function() {
+		var appModules = ['myApp'];
 		if (isDevMode) {
-			angular.bootstrap($('#myApp'), ['myApp', mockBackend]);
-		} else {
-			if (disablePassword) {
-				app.run(function($http) {
-					$http.defaults.headers.common.Authorization = 'Basic ' + btoa('bradleytrager@gmail.com' + ':' + 'password');
-				});
-			}
-			angular.bootstrap($('#myApp'), ['myApp']);
-		}
+			appModules.push(mockBackend);
+		} 
+		angular.bootstrap($('#myApp'), appModules);
 	});
 
 });

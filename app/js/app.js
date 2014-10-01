@@ -22,6 +22,13 @@ define([
       'n3-line-chart'
     ])
     .controller('loginController', loginController)
+    .run(function($http) {
+        var username = sessionStorage.getItem("username");
+        var password = sessionStorage.getItem("password");
+        if (username && password) {
+          $http.defaults.headers.common.Authorization = 'Basic ' + btoa(username + ':' + password);
+        }
+    })
     .config(routes)
     .config(['$httpProvider',
       function($httpProvider) {

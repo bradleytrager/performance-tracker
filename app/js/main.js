@@ -42,14 +42,13 @@ require([
 ], function(angular, app, routes, mockBackend) {
 
 	var isDevMode = false;
-	
+
 	$(function() {
-		if(isDevMode){
-			angular.bootstrap($('#myApp'), ['myApp', mockBackend]);
-		}
-		else {
-			angular.bootstrap($('#myApp'), ['myApp']);
-		}
+		var appModules = ['myApp'];
+		if (isDevMode) {
+			appModules.push(mockBackend);
+		} 
+		angular.bootstrap($('#myApp'), appModules);
 	});
-	
+
 });

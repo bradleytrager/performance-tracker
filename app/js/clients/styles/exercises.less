@@ -1,31 +1,111 @@
 #exercises {
 	margin:10px;
-}
-
-.exerciseName {
-	float: left;
-	width: 100px;
-	height: 75px;
-	border:1px solid gray;
-	text-align: center;
-	padding:5px;
 	
-	&:hover {
-		background: gray;
-		cursor: pointer;
+	table {
+		margin:10px 0;
+	}
+
+	td:not(:first-child) {
+		text-align: center;
+		font-size: 9pt;
+		font-weight: bold;
+	}
+
+	.topTable {
+		tr:first-child td:not(:first-child) {
+			border-top: 1px black solid;
+			background-color: #FCF99F;
+		}
+		tr:nth-child(2) td:not(:first-child){
+			background-color: #B6E494;
+		}
+		tr:nth-child(3) td:not(:first-child){
+			background-color: #9CE05A;
+		}
+		tr:nth-child(4) td:not(:first-child){
+			background-color: #FDA18B;
+		}
+		td {
+			width: 65px;
+			white-space: nowrap;
+		}
+		td:first-child {
+			border:none;
+			font-size: 12pt;
+		}
+		
+		td:nth-child(2) {
+			border-left: 1px lightgray dashed;
+		}
+		td {
+			border: 1px black dashed;
+		}
+		td:last-child {
+			border-right: 1px lightgray dashed;
+		}
+	}
+
+	.bottomTable {
+		tr:first-child td:not(:first-child) {
+			border-top: none;
+			background-color: white;
+		}
+		tr:nth-child(2) td:not(:first-child){
+			background-color: #ADBB8C;
+		}
+		tr:nth-child(3) td:not(:first-child){
+			background-color: white;
+		}
+		tr:nth-child(4) td:not(:first-child){
+			background-color: #A0EEEA;
+		}
+		td {
+			width: 65px;
+			white-space: nowrap;
+		}
+		td:first-child {
+			border:none;
+			font-size: 12pt;
+		}
+		
+		/*td:nth-child(2) {
+			border-left: 1px lightgray dashed;
+		}*/
+		td {
+			border: 1px lightgray solid;
+		}
+		td:last-child {
+			border-right: 1px lightgray dashed;
+		}
 	}
 	
-}
 
-.reportHeader {
-	text-align: center;
 
-	li {
-		text-align: left;
+	.exerciseName {
+		float: left;
+		width: 100px;
+		height: 60px;
+		border:1px solid gray;
+		text-align: center;
+		padding:5px;
+
+		&:hover, &.active {
+			background: gray;
+			cursor: pointer;
+		}
+
 	}
-}
 
-.exercisesError {
-	text-align: center;
-	color:black;
+	.reportHeader {
+		text-align: center;
+
+		li {
+			text-align: left;
+		}
+	}
+
+	.exercisesError {
+		text-align: center;
+		color:black;
+	}
 }

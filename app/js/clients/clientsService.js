@@ -11,14 +11,14 @@ define([], function() {
 			return $http.get(BASE_URL + 'listClientsForLoggedInUser/json-user/.json');
 		};
 
-		this.getClient = function(id) {
-			return $http.get(BASE_URL + 'listUser/json-user/.json?RFMscriptParam=' + id);
+		this.getClient = function(clientId) {
+			return $http.get(BASE_URL + 'listUser/json-user/.json?RFMscriptParam=' + clientId);
 		};
 
-		this.getExercises = function(id, period) {
+		this.getExercises = function(clientId, period) {
 			var whenExercises = $q.defer();
 
-			service.getClient(id).then(function() {
+			service.getClient(clientId).then(function() {
 				$http.get(BASE_URL + 'listExercisesForClient/json-exerciseList/.json?RFMscriptParam=' + period).then(function(exercises) {
 					whenExercises.resolve(exercises);
 				},
@@ -33,6 +33,11 @@ define([], function() {
 		this.getReportingPeriods = function() {
 			return $http.get(BASE_URL + 'listReportPeriodOptions/ReportingPeriods/.json');
 		};
+
+		this.getReport = function(exerciseId) {
+			var url = BASE_URL + "listHistoryForClientForExercise/json-history/.json?RFMscriptParam=" + exerciseId;
+			return $http.get(url);
+		}
 
 	};
 

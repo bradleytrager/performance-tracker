@@ -103,17 +103,17 @@ define([], function() {
 					series: [{
 						y: "Current Weight",
 						label: "Current Weight",
-						color: "#1871A4",
+						color: "#BFBFBF",
+						type: "column",
 						axis: "y2",
-						type: "line",
-						thickness: "3px",
-						dotSize: 10,
 						id: "series_0"
 					}, {
 						y: "Total Time",
 						label: "Time Under Load",
-						color: "#BFBFBF",
-						type: "column",
+						color: "#1871A4",
+						type: "line",
+						thickness: "3px",
+						dotSize: 10,
 						axis: "y",
 						id: "series_1"
 					}],

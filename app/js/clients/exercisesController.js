@@ -99,6 +99,9 @@ define([], function() {
 				$scope.timeUnderLoads = timeUnderLoads;
 				$scope.rangeOfMotions = rangeOfMotions;
 
+				var ymin = 0.9 * d3.min(currentWeights);
+				var ymax = 1.1 * d3.max(currentWeights);
+
 				$scope.options = {
 					series: [{
 						y: "Current Weight",
@@ -146,7 +149,9 @@ define([], function() {
 							type: "linear",
 							labelFunction: function(weight) {
 								return weight + " lbs"
-							}
+							},
+							min: ymin,
+							max: ymax
 						}
 					},
 					lineMode: "linear",

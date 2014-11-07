@@ -41,7 +41,7 @@ require([
 	'angularMocks'
 ], function(angular, app, routes, mockBackend) {
 
-	var isDevMode = true;
+	var isDevMode = false;
 
 	$(function() {
 		var appModules = ['myApp'];

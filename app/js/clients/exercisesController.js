@@ -2,29 +2,39 @@
 
 define([], function() {
 
-	// Declare app level module which depends on filters, and services
 	var exercisesController = function($scope, $routeParams, clientsService) {
 		var BASE_URL = 'http://pt.trackformance.com/RESTfm/PT_Demo/script/';
 
-		clientsService.getReportingPeriods().then(function(periods) {
-			$scope.periods = periods.data.data;
-			$scope.period = $scope.periods[0];
-			console.log($scope.period);
-			clientsService.getExercises($routeParams.clientId, $scope.period.PeriodValueDays).then(
-
-				function(exercises) {
-					$scope.exercises = exercises.data.data;
-					$scope.exercises.forEach(function(exercise) {
-						exercise.id = exercise['pk Exercise ID'];
-						exercise.name = exercise['Exercise Name'];
-					});
-				},
-
-				function(error) {
-					$scope.exercisesError = error.data.info["X-RESTfm-FM-Reason"];
+		var loadData = function() {
+			clientsService.getReportingPeriods().then(function(periods) {
+				$scope.periods = periods.data.data;
+				
+				if (!$scope.period) {
+					$scope.period = $scope.periods[0];
 				}
-			);
-		});
+
+				clientsService.getExercises($routeParams.clientId, $scope.period.PeriodValueDays).then(
+
+					function(exercises) {
+						$scope.exercises = exercises.data.data;
+						$scope.exercises.forEach(function(exercise) {
+							exercise.id = exercise['pk Exercise ID'];
+							exercise.name = exercise['Exercise Name'];
+						});
+
+						if ($scope.selectedExerciseId) {
+							$scope.getReport($scope.selectedExerciseId);
+						}
+					},
+
+					function(error) {
+						$scope.exercisesError = error.data.info["X-RESTfm-FM-Reason"];
+					}
+				);
+			});
+		};
+
+		loadData();
 
 		clientsService.getClient($routeParams.clientId).then(function(client) {
 			$scope.client = client.data.data[0];
@@ -38,7 +48,7 @@ define([], function() {
 
 		$scope.setPeriod = function(period) {
 			$scope.period = period;
-			console.log($scope.period);
+			loadData();
 		};
 
 		$scope.getReport = function(exerciseId) {
@@ -56,7 +66,7 @@ define([], function() {
 				var timeUnderLoads = [];
 				var rangeOfMotions = [];
 				var outOfSequences = [];
-				
+
 				report.forEach(function(data, index) {
 					data["Date"] = new Date(data["Date"]).getTime();
 					data["dateIndex"] = index;
@@ -68,7 +78,7 @@ define([], function() {
 
 					var timestamp = new Date(data["Timestamp"]);
 					var hours = timestamp.getHours();
-					if (hours == 0){
+					if (hours == 0) {
 						timestamp = "12 AM";
 					} else if (hours > 12) {
 						timestamp = (hours - 12) + " PM";
@@ -80,9 +90,9 @@ define([], function() {
 					outOfSequences.push("N/A");
 					performances.push(data["performanceView"]);
 					currentWeights.push(data["Current Weight"]);
-					netChangeWeights.push(data["netChangeWeight"]? data["netChangeWeight"] + "%" : "");
-					
-					var timeUnderLoadMinutes = Math.floor(data["Total Time"]/60);
+					netChangeWeights.push(data["netChangeWeight"] ? data["netChangeWeight"] + "%" : "");
+
+					var timeUnderLoadMinutes = Math.floor(data["Total Time"] / 60);
 					var timeUnderLoadSeconds = data["Total Time"] % 60;
 					timeUnderLoads.push(timeUnderLoadMinutes + "m " + timeUnderLoadSeconds + "s");
 					rangeOfMotions.push(data["Current Range"]);

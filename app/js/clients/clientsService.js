@@ -13,34 +13,29 @@ define([], function() {
 		};
 
 		this.getClient = function(clientId) {
-			return $http.get(BASE_URL + 'listUser/json-user/.json?RFMscriptParam=' + clientId);
+			return service.get().then(function() {
+				return $http.get(BASE_URL + 'listUser/json-user/.json?RFMscriptParam=' + clientId);
+			});
 		};
 
 		this.getExercises = function(clientId, period) {
-			var whenExercises = $q.defer();
-
-			service.getClient(clientId).then(function() {
-				$http.get(BASE_URL + 'listExercisesForClient/json-exerciseList/.json?RFMscriptParam=' + period).then(function(exercises) {
-					whenExercises.resolve(exercises);
-				},
-				function(error){
-					whenExercises.reject(error);
-				});
+			return service.getClient(clientId).then(function() {
+				return $http.get(BASE_URL + 'listExercisesForClient/json-exerciseList/.json?RFMscriptParam=' + period);
 			});
-
-			return whenExercises.promise;
 		};
 
 		this.getReportingPeriods = function() {
 			return $http.get(BASE_URL + 'listReportPeriodOptions/ReportingPeriods/.json');
 		};
 
-		this.getReport = function(exerciseId) {
+		this.getReport = function(exerciseId, clientId, period) {
 			var url = BASE_URL + "listHistoryForClientForExercise/json-history/.json?RFMscriptParam=" + exerciseId;
-			return $http.get(url);
+			return service.getExercises(clientId, period).then(function() {
+				return $http.get(url);
+			});
 		}
 
 	};
 
-	return ['$http','$q', clientsService];
+	return ['$http', '$q', clientsService];
 });

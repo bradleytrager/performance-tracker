@@ -55,7 +55,7 @@ define([], function() {
 
 		$scope.getReport = function(exerciseId) {
 			$scope.selectedExercise = exerciseId;
-			clientsService.getReport(exerciseId).then(function(response) {
+			clientsService.getReport(exerciseId, $routeParams.clientId, $scope.period.PeriodValueDays).then(function(response) {
 				var report = response.data.data;
 				console.log(report);
 				var dates = [];

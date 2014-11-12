@@ -16,7 +16,8 @@
     "requirejs": "~2.1.9",
     "requirejs-text": "~2.0.10",
     "less": "~1.7.4",
-    "angular-bootstrap": "~0.11.0"
+    "angular-bootstrap": "~0.11.0",
+    "tinycolor": "~0.11.1"
   },
   "devDependencies": {
     "jquery": "~2.1.1"

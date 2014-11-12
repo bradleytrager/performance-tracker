@@ -33,8 +33,8 @@
 					<td>Out of Sequence</td><td ng-repeat="outOfSequence in outOfSequences track by $index"><span ng-bind="outOfSequence"></span></td>
 				</tr>
 			</table>
-		<div style="height:300px;">
-		<linechart data='data' options='options'></linechart>
+		<div style="height:300px;margin-left: 90px;">
+		<d3-bars line-data="lineData" bar-data="barData" label="name" on-click="d3OnClick(item)"></d3-bars>
 		</div>
 		<table class="bottomTable">
 				<tr>

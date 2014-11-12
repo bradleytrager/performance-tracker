@@ -6,14 +6,14 @@ define([], function() {
 		var BASE_URL = 'http://pt.trackformance.com/RESTfm/PT_Demo/script/';
 
 		var loadData = function() {
-			clientsService.getReportingPeriods().then(function(periods) {
+			return clientsService.getReportingPeriods().then(function(periods) {
 				$scope.periods = periods.data.data;
-				
+
 				if (!$scope.period) {
 					$scope.period = $scope.periods[0];
 				}
 
-				clientsService.getExercises($routeParams.clientId, $scope.period.PeriodValueDays).then(
+				return clientsService.getExercises($routeParams.clientId, $scope.period.PeriodValueDays).then(
 
 					function(exercises) {
 						$scope.exercises = exercises.data.data;
@@ -48,7 +48,9 @@ define([], function() {
 
 		$scope.setPeriod = function(period) {
 			$scope.period = period;
-			loadData();
+			loadData().then(function() {
+				$scope.getReport($scope.selectedExercise);
+			});
 		};
 
 		$scope.getReport = function(exerciseId) {

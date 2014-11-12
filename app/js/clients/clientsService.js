@@ -5,8 +5,8 @@ define([], function() {
 	var clientsService = function($http, $q) {
 		var service = this;
 		var STAGE_URL = 'PT_Demo';
-		var PROD_URL = 'PerfTracker17austin';
-		var BASE_URL = 'http://pt.trackformance.com/RESTfm/' + STAGE_URL + '/script/';
+		var PROD_URL = 'PerfTrackerRESTfm';
+		var BASE_URL = 'http://pt.trackformance.com/RESTfm/' + PROD_URL + '/script/';
 
 		this.get = function() {
 			return $http.get(BASE_URL + 'listClientsForLoggedInUser/json-user/.json');

@@ -87,7 +87,7 @@ define([], function() {
 					}
 					timestamps.push(timestamp);
 					goToFailures.push("N/A");
-					outOfSequences.push("N/A");
+					outOfSequences.push(data["oosView"]);
 					performances.push(data["performanceView"]);
 					currentWeights.push(data["Current Weight"]);
 					netChangeWeights.push(data["netChangeWeight"] ? data["netChangeWeight"] + "%" : "");

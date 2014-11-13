@@ -11,24 +11,11 @@ define([], function() {
         label: "@",
         onClick: "&"
       },
-      link: function(scope, iElement, iAttrs) {
+      link: function(scope, element, iAttrs) {
         var lineData = scope.lineData;
         var barData = scope.barData;
-        var svg = d3.select(iElement[0])
-          .append("svg")
-          .attr("width", "100%")
-          .attr("height", "500");
-
-        // on window resize, re-render d3 canvas
-        window.onresize = function() {
-          return scope.$apply();
-        };
-        scope.$watch(function() {
-          return angular.element(window)[0].innerWidth;
-        }, function() {
-          return scope.render(scope.data);
-        });
-
+        var svg = d3.select(element[0])
+            .append("svg")
         // watch for data changes and re-render
         scope.$watch('lineData', function(newVals, oldVals) {
           return scope.render(newVals);
@@ -36,41 +23,44 @@ define([], function() {
 
         // define render function
         scope.render = function(data) {
-          // remove all previous items before render
-          svg.selectAll("*").remove();
-
-          var graph = svg,
-            WIDTH = 5000,
-            HEIGHT = 300,
+          var COLUMN_WIDTH = 50;
+            var HEIGHT = 300,
             MARGINS = {
               top: 20,
-              right: 20,
+              right: 50,
               bottom: 20,
               left: 50
-            },
+            };
+          var WIDTH = scope.lineData.length * COLUMN_WIDTH + MARGINS.right + MARGINS.left,
             LINE_COLOR = '#1871A4',
             BAR_COLOR = '#BFBFBF',
             CIRCLE_COLOR = '#1871A4';
+            svg.selectAll("*").remove();
+          
+            svg.attr("width", WIDTH + "px")
+            .attr("height", "500px");
+
+          var graph = svg;
 
           var xRange = d3.scale.ordinal()
-            .rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1)
-            .domain(barData.map(function(d) {
+            .rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0)
+            .domain(scope.barData.map(function(d) {
               return d.x;
             }));
           var yRange = d3.scale.linear()
             .range([HEIGHT - MARGINS.top, MARGINS.bottom])
-            .domain([d3.min(lineData, function(d) {
-              return d.y - 5;
-            }), d3.max(lineData, function(d) {
-              return d.y;
+            .domain([d3.min(scope.lineData, function(d) {
+              return d.y - 0.2 * d.y;
+            }), d3.max(scope.lineData, function(d) {
+              return d.y + 0.2 * d.y;
             })]);
 
           var yRangeBar = d3.scale.linear()
             .range([HEIGHT - MARGINS.top, MARGINS.bottom])
-            .domain([d3.min(barData, function(d) {
-              return d.y - 5;
-            }), d3.max(barData, function(d) {
-              return d.y;
+            .domain([d3.min(scope.barData, function(d) {
+              return d.y - 0.2 * d.y;
+            }), d3.max(scope.barData, function(d) {
+              return d.y + 0.2 * d.y;
             })]);
 
           var xAxis = d3.svg.axis()
@@ -95,7 +85,7 @@ define([], function() {
             .tickSize(1)
             .orient('right')
             .tickFormat(function(d) {
-              return d + " kg"
+              return d + " s"
             })
             .tickSubdivide(true);
 
@@ -127,7 +117,7 @@ define([], function() {
 
 
           graph.selectAll('rect')
-            .data(barData)
+            .data(scope.barData)
             .enter()
             .append('rect')
             .attr('x', function(d) {
@@ -148,13 +138,13 @@ define([], function() {
             .attr('opacity', 0.5);
 
           graph.append('path')
-            .attr('d', lineFunc(lineData))
+            .attr('d', lineFunc(scope.lineData))
             .attr('stroke', LINE_COLOR)
             .attr('stroke-width', 2)
             .attr('fill', 'none');
           graph
             .selectAll("circle")
-            .data(lineData)
+            .data(scope.lineData)
             .enter().append("circle")
             .attr("class", "dot")
             .attr("fill", "white")

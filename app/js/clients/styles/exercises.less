@@ -5,11 +5,29 @@
 		margin:10px 0;
 	}
 
+	tbody {
+		white-space: nowrap;
+	}
+
 	td:not(:first-child) {
 		text-align: center;
 		font-size: 9pt;
 		font-weight: bold;
 	}
+	.topTable, .bottomTable {
+		td {
+			width: 50px;
+			height: 25px;
+			white-space: nowrap;
+			display: inline-block;
+			padding:2px;
+		}
+		td:first-child {
+			border:none;
+			font-size: 12pt;
+			width: 150px;
+		}
+}
 
 	.topTable {
 		tr:first-child td:not(:first-child) {
@@ -25,14 +43,7 @@
 		tr:nth-child(4) td:not(:first-child){
 			background-color: #FDA18B;
 		}
-		td {
-			width: 65px;
-			white-space: nowrap;
-		}
-		td:first-child {
-			border:none;
-			font-size: 12pt;
-		}
+		
 		
 		td:nth-child(2) {
 			border-left: 1px lightgray dashed;
@@ -58,14 +69,6 @@
 		}
 		tr:nth-child(4) td:not(:first-child){
 			background-color: #A0EEEA;
-		}
-		td {
-			width: 65px;
-			white-space: nowrap;
-		}
-		td:first-child {
-			border:none;
-			font-size: 12pt;
 		}
 		
 		/*td:nth-child(2) {

@@ -103,17 +103,18 @@ define([], function() {
 					timeUnderLoads.push(timeUnderLoadMinutes + "m " + timeUnderLoadSeconds + "s");
 					rangeOfMotions.push(data["Current Range"]);
 
-					$scope.barData.push({
+					barData.push({
 						x: index,
 						y: data["Current Weight"]
 					});
-					$scope.lineData.push({
+					lineData.push({
 						x: index,
 						y: data["Total Time"]
 					});
 
 				});
-
+				$scope.barData = barData;
+				$scope.lineData = lineData;
 				$scope.data = report;
 				$scope.timestamps = timestamps;
 				$scope.goToFailures = goToFailures;

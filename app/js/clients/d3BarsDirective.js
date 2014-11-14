@@ -8,12 +8,14 @@ define([], function() {
       scope: {
         lineData: "=",
         barData: "=",
+        data:"=",
         label: "@",
         onClick: "&"
       },
       link: function(scope, element, iAttrs) {
         var lineData = scope.lineData;
         var barData = scope.barData;
+        var data = scope.data;
         var svg = d3.select(element[0])
             .append("svg")
         // watch for data changes and re-render
@@ -26,9 +28,9 @@ define([], function() {
           var COLUMN_WIDTH = 50;
             var HEIGHT = 300,
             MARGINS = {
-              top: 20,
+              top: 50,
               right: 50,
-              bottom: 20,
+              bottom: 50,
               left: 50
             };
           var WIDTH = scope.lineData.length * COLUMN_WIDTH + MARGINS.right + MARGINS.left,
@@ -38,7 +40,7 @@ define([], function() {
             svg.selectAll("*").remove();
           
             svg.attr("width", WIDTH + "px")
-            .attr("height", "500px");
+            .attr("height", HEIGHT);
 
           var graph = svg;
 
@@ -47,14 +49,6 @@ define([], function() {
             .domain(scope.barData.map(function(d) {
               return d.x;
             }));
-          var yRange = d3.scale.linear()
-            .range([HEIGHT - MARGINS.top, MARGINS.bottom])
-            .domain([d3.min(scope.lineData, function(d) {
-              return d.y - 0.2 * d.y;
-            }), d3.max(scope.lineData, function(d) {
-              return d.y + 0.2 * d.y;
-            })]);
-
           var yRangeBar = d3.scale.linear()
             .range([HEIGHT - MARGINS.top, MARGINS.bottom])
             .domain([d3.min(scope.barData, function(d) {
@@ -63,16 +57,30 @@ define([], function() {
               return d.y + 0.2 * d.y;
             })]);
 
+          var yRangeLine = d3.scale.linear()
+            .range([HEIGHT - MARGINS.top, MARGINS.bottom])
+            .domain([d3.min(scope.lineData, function(d) {
+              return d.y - 0.2 * d.y;
+            }), d3.max(scope.lineData, function(d) {
+              return d.y + 0.2 * d.y;
+            })]);
+
           var xAxis = d3.svg.axis()
             .scale(xRange)
             .tickSize(1)
-            .tickFormat(function(d) {
-              return d + "s"
-            })
+            .tickFormat(function(index) {
+                
+                var msTime = scope.data[index].Date
+                var date = new Date(msTime);
+
+                var dateParts = date.toString().split(" ");
+                var formattedDate = dateParts[1] + dateParts[2];
+                return formattedDate;
+              })
             .tickSubdivide(true);
 
           var yAxis = d3.svg.axis()
-            .scale(yRange)
+            .scale(yRangeBar)
             .tickSize(1)
             .orient('left')
             .tickFormat(function(d) {
@@ -81,7 +89,7 @@ define([], function() {
             .tickSubdivide(true);
 
           var y2Axis = d3.svg.axis()
-            .scale(yRangeBar)
+            .scale(yRangeLine)
             .tickSize(1)
             .orient('right')
             .tickFormat(function(d) {
@@ -109,7 +117,7 @@ define([], function() {
               return xRange(d.x) + xRange.rangeBand() / 2;
             })
             .y(function(d) {
-              return yRange(d.y);
+              return yRangeLine(d.y);
             })
             .interpolate('cardinal')
             .tension(0.8);
@@ -124,11 +132,11 @@ define([], function() {
               return xRange(d.x);
             })
             .attr('y', function(d) {
-              return yRange(d.y);
+              return yRangeBar(d.y);
             })
             .attr('width', xRange.rangeBand())
             .attr('height', function(d) {
-              return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
+              return ((HEIGHT - MARGINS.bottom) - yRangeBar(d.y));
             })
             .attr('rx', 1)
             .attr('ry', 1)
@@ -156,7 +164,7 @@ define([], function() {
               return xRange(d.x) + xRange.rangeBand() / 2;
             })
             .attr("cy", function(d) {
-              return yRange(d.y);
+              return yRangeLine(d.y);
             });
 
 

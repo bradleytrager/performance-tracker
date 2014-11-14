@@ -6,6 +6,7 @@ define([], function() {
 		var BASE_URL = 'http://pt.trackformance.com/RESTfm/PT_Demo/script/';
 		$scope.lineData = [];
 		$scope.barData = [];
+		$scope.data = [];
 		var loadData = function() {
 			return clientsService.getReportingPeriods().then(function(periods) {
 				$scope.periods = periods.data.data;

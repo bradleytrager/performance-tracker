@@ -4,7 +4,9 @@ define([], function() {
 
 	var exercisesController = function($scope, $routeParams, clientsService) {
 		var BASE_URL = 'http://pt.trackformance.com/RESTfm/PT_Demo/script/';
-
+		$scope.lineData = [];
+		$scope.barData = [];
+		$scope.data = [];
 		var loadData = function() {
 			return clientsService.getReportingPeriods().then(function(periods) {
 				$scope.periods = periods.data.data;
@@ -69,6 +71,9 @@ define([], function() {
 				var rangeOfMotions = [];
 				var outOfSequences = [];
 
+				var barData = [];
+				var lineData = [];
+
 				report.forEach(function(data, index) {
 					data["Date"] = new Date(data["Date"]).getTime();
 					data["dateIndex"] = index;
@@ -99,8 +104,18 @@ define([], function() {
 					timeUnderLoads.push(timeUnderLoadMinutes + "m " + timeUnderLoadSeconds + "s");
 					rangeOfMotions.push(data["Current Range"]);
 
-				});
+					barData.push({
+						x: index,
+						y: data["Current Weight"]
+					});
+					lineData.push({
+						x: index,
+						y: data["Total Time"]
+					});
 
+				});
+				$scope.barData = barData;
+				$scope.lineData = lineData;
 				$scope.data = report;
 				$scope.timestamps = timestamps;
 				$scope.goToFailures = goToFailures;
